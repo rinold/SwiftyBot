@@ -29,10 +29,16 @@ import Foundation
 /// Telegram message sender.
 public struct MessageSender: Codable {
     /// User first name.
+    public private(set) var id: String
     public private(set) var firstName: String
+    public private(set) var lastName: String
+    public private(set) var username: String
     
     /// Coding keys, used by Codable protocol.
     private enum CodingKeys: String, CodingKey {
+        case id
         case firstName = "first_name"
+        case lastName = "last_name"
+        case username
     }
 }

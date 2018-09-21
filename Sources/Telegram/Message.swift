@@ -34,4 +34,6 @@ public struct Message: Codable {
     public private(set) var text: String
     /// Contains from who has been sent the message.
     public private(set) var from: MessageSender
+    /// Date the message was sent in Unix time.
+    public private(set) var date: UInt64
 }

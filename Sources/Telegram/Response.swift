@@ -42,12 +42,15 @@ public struct Response: Codable {
     public private(set) var chatID: Int
     /// Response text.
     public var text: String
+
+    public var replyMarkup: ReplyKeyboardMarkup?
     
     /// Coding keys, used by Codable protocol.
     private enum CodingKeys: String, CodingKey {
         case method
         case chatID = "chat_id"
         case text
+        case replyMarkup = "reply_markup"
     }
     
     /// Create a response for a request.
@@ -60,7 +63,10 @@ public struct Response: Codable {
         let messageRequest = try request.content.syncDecode(MessageRequest.self)
         
         /// Creates the initial response, with a default message for empty user's message.
-        var response = Telegram.Response(method: .sendMessage, chatID: messageRequest.message.chat.id, text: "I'm sorry but your message is empty 😢")
+        var response = Telegram.Response(method: .sendMessage,
+                                         chatID: messageRequest.message.chat.id,
+                                         text: "I'm sorry but your message is empty 😢",
+                                         replyMarkup: nil)
         
         /// Check if the message is not empty
         if !messageRequest.message.text.isEmpty {
@@ -75,13 +81,12 @@ public struct Response: Codable {
                 /// Check if it's a `help` command.
                 } else if let command = Command(messageRequest.message.text), command.command == "help" {
                     response.text = """
-                    Welcome to SwiftyBot, an example on how to create a Telegram bot with Swift using Vapor.
-                    https://www.fabriziobrancati.com/SwiftyBot
-                    
-                    /start - Welcome message
-                    /help - Help message
-                    Any text - Returns the reversed message
+                    Help?
                     """
+                    var keyboardMarkup = ReplyKeyboardMarkup()
+                    var row = [KeyboardButton(text: "Button 1"), KeyboardButton(text: "Button 2")]
+                    keyboardMarkup.keyboard.append(row)
+                    response.replyMarkup = keyboardMarkup
                 /// It's not a valid command.
                 } else {
                     response.text = """
@@ -114,5 +119,6 @@ public extension Response {
         method = .sendMessage
         chatID = 0
         text = ""
+        replyMarkup = nil
     }
 }
