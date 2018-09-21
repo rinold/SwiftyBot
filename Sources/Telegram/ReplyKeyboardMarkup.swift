@@ -12,6 +12,14 @@ public struct ReplyKeyboardMarkup: Codable {
     var resizeKeyboard: Bool?
     var oneTimeKeyboard: Bool?
     var selective: Bool?
+
+    /// Coding keys, used by Codable protocol.
+    private enum CodingKeys: String, CodingKey {
+        case keyboard
+        case resizeKeyboard = "resize_keyboard"
+        case oneTimeKeyboard = "one_time_keyboard"
+        case selective
+    }
 }
 
 extension ReplyKeyboardMarkup {
