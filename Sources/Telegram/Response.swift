@@ -78,12 +78,12 @@ public struct Response: Codable {
             if messageRequest.message.text.hasPrefix("/") {
                 /// Check if it's a `start` command.
                 if let command = Command(messageRequest.message.text), command.command == "start" {
-                    let player = Player()
-                    player.id = messageRequest.message.from.id
-                    player.location = .nowhere
-                    player.name = messageRequest.message.from.username ?? messageRequest.message.from.firstName
+//                    let player = Player()
+//                    player.id = messageRequest.message.from.id
+//                    player.location = .nowhere
+                    let name = messageRequest.message.from.username ?? messageRequest.message.from.firstName
                     response.text = """
-                    Welcome to SwiftyBot \(player.name)!
+                    Welcome to SwiftyBot \(name)!
                     To list all available commands type /help
                     """
                 /// Check if it's a `help` command.
