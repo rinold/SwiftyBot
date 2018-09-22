@@ -44,6 +44,8 @@ public struct Response: Codable {
     public var text: String
 
     public var replyMarkup: ReplyKeyboardMarkup?
+
+    public var parseMode: ParseMode?
     
     /// Coding keys, used by Codable protocol.
     private enum CodingKeys: String, CodingKey {
@@ -51,6 +53,7 @@ public struct Response: Codable {
         case chatID = "chat_id"
         case text
         case replyMarkup = "reply_markup"
+        case parseMode = "parse_mode"
     }
     
     /// Create a response for a request.
@@ -66,7 +69,8 @@ public struct Response: Codable {
         var response = Telegram.Response(method: .sendMessage,
                                          chatID: messageRequest.message.chat.id,
                                          text: "I'm sorry but your message is empty 😢",
-                                         replyMarkup: nil)
+                                         replyMarkup: nil,
+                                         parseMode: .markdown)
         
         /// Check if the message is not empty
         if !messageRequest.message.text.isEmpty {
@@ -74,8 +78,12 @@ public struct Response: Codable {
             if messageRequest.message.text.hasPrefix("/") {
                 /// Check if it's a `start` command.
                 if let command = Command(messageRequest.message.text), command.command == "start" {
+                    let player = Player()
+                    player.id = messageRequest.message.from.id
+                    player.location = .nowhere
+                    player.name = messageRequest.message.from.username ?? messageRequest.message.from.firstName
                     response.text = """
-                    Welcome to SwiftyBot \(messageRequest.message.from.firstName)!
+                    Welcome to SwiftyBot \(player.name)!
                     To list all available commands type /help
                     """
                 /// Check if it's a `help` command.

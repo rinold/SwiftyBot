@@ -31,8 +31,8 @@ public struct MessageSender: Codable {
     /// User first name.
     public private(set) var id: Int
     public private(set) var firstName: String
-    public private(set) var lastName: String
-    public private(set) var username: String
+    public private(set) var lastName: String?
+    public private(set) var username: String?
     
     /// Coding keys, used by Codable protocol.
     private enum CodingKeys: String, CodingKey {

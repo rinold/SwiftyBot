@@ -25,6 +25,7 @@ public struct ReplyKeyboardMarkup: Codable {
 extension ReplyKeyboardMarkup {
     public init() {
         keyboard = []
+        resizeKeyboard = true
     }
 }
 
