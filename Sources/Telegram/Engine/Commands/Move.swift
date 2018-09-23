@@ -13,4 +13,6 @@ public final class MoveCommandProcessor: Processor {
         try! Engine.respondAfter(time: 30, with: message)
         return .respond(to: player.chatId, text: "Ты пошел, жди...")
     }
+
+    public init() { }
 }

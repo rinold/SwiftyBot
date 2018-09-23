@@ -27,3 +27,4 @@ extension Location {
 }
 
 extension Location: SQLiteModel { }
+extension Location: Migration { }

@@ -41,3 +41,4 @@ public final class Player: Codable {
 }
 
 extension Player: SQLiteModel { }
+extension Player: Migration { }

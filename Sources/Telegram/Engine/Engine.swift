@@ -37,6 +37,10 @@ public final class Engine {
         botClient = try! BotClient(host: "api.telegram.org", port: 80, token: telegramSecret, worker: worker)
     }
 
+    static public func register(processors: [Processor]) {
+        engine.commandProcessors = processors
+    }
+
     static public func process(request: Request) throws -> Telegram.Response {
         let message = try request.content.syncDecode(MessageRequest.self).message
         let player = try getPlayer(from: message, on: request)

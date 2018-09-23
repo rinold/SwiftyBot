@@ -11,4 +11,6 @@ public final class StartCommandProcessor: Processor {
     public func process(_ player: Player, command: String, with parameters: String?) -> Telegram.Response? {
         return .respond(to: player.chatId, text: "Приветствую тебя, \(player.name)!")
     }
+    
+    public init() { }
 }
