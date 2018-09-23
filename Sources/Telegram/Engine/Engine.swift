@@ -34,7 +34,7 @@ public final class Engine {
 
     private init() {
         let worker = MultiThreadedEventLoopGroup(numberOfThreads: 1)
-        botClient = try! BotClient(host: "api.telegram.org", port: 80, token: telegramSecret, worker: worker)
+        botClient = try! BotClient(host: "api.telegram.org", port: 443, token: telegramSecret, worker: worker)
     }
 
     static public func register(processors: [Processor]) {
