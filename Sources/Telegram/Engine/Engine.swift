@@ -83,9 +83,9 @@ public final class Engine {
 
 extension Engine {
     static public func getPlayer(from message: Message, on request: Request) throws -> Player {
-        if let player = try Player.query(on: request).filter(\.telId == message.from.id).first().wait() {
-            return player
-        }
+//        if let player = try Player.query(on: request).filter(\.telId == message.from.id).first().wait() {
+//            return player
+//        }
         return Player(telId: message.from.id, chatId: message.chat.id, name: message.from.firstName)
     }
 }
