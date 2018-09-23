@@ -24,15 +24,9 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 //  SOFTWARE.
 
-import Messenger
 import Vapor
+import Telegram
 
 /// Called after your application has initialized.
 public func boot(_ app: Application) throws {
-    let getStarted = GetStarted(payload: GetStarted.defaultPayload)
-    let greeting = Greeting(greeting: [
-        LocalizedGreeting(locale: .default, text: "Hi!")
-    ])
-    
-    _ = Profile(getStarted: getStarted, greeting: greeting, on: app)
 }

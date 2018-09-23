@@ -24,6 +24,7 @@ DerivedData
 timeline.xctimeline
 playground.xcworkspace
 *.xcodeproj
+.DS_STore
 
 # Build
 build/

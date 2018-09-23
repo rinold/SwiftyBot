@@ -28,27 +28,23 @@
 import PackageDescription
 
 let package = Package(
-    name: "SwiftyBot",
+    name: "ThyearBot",
     dependencies: [
         .package(url: "https://github.com/vapor/vapor.git", .upToNextMinor(from: "3.0.0")),
+        .package(url: "https://github.com/vapor/fluent-sqlite.git", .upToNextMinor(from: "3.0.0")),
         .package(url: "https://github.com/FabrizioBrancati/BFKit-Swift.git", .upToNextMinor(from: "3.2.0"))
     ],
     targets: [
-        .target(name: "SwiftyBot", dependencies: ["Bot"]),
+        .target(name: "ThyearBot", dependencies: ["Bot"]),
         .target(name: "Bot", dependencies: [
             "Vapor",
-            "Telegram",
-            "Messenger"
+            "Telegram"
         ]),
         .target(name: "Telegram", dependencies: [
             "Vapor",
             "BFKit",
-            "Helpers"
-        ]),
-        .target(name: "Messenger", dependencies: [
-            "Vapor",
-            "BFKit",
-            "Helpers"
+            "Helpers",
+            "FluentSQLite"
         ]),
         .target(name: "Assistant", dependencies: [
             "Vapor",
@@ -60,10 +56,8 @@ let package = Package(
             "Bot",
             "Vapor",
             "Telegram",
-            "Messenger"
         ]),
         .testTarget(name: "TelegramTests", dependencies: ["Telegram"]),
-        .testTarget(name: "MessengerTests", dependencies: ["Messenger"]),
         .testTarget(name: "HelpersTests", dependencies: ["Helpers"])
     ]
 )

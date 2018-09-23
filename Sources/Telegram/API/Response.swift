@@ -27,6 +27,7 @@
 import BFKit
 import Foundation
 import Vapor
+import Fluent
 
 /// Telegram response
 public struct Response: Codable {
@@ -62,52 +63,33 @@ public struct Response: Codable {
     /// - Returns: Returns the message `HTTPResponse`.
     /// - Throws: Decoding errors.
     public func response(_ request: Request) throws -> HTTPResponse {
-        /// Decode the request.
-        let messageRequest = try request.content.syncDecode(MessageRequest.self)
-        
-        /// Creates the initial response, with a default message for empty user's message.
-        var response = Telegram.Response(method: .sendMessage,
-                                         chatID: messageRequest.message.chat.id,
-                                         text: "I'm sorry but your message is empty 😢",
-                                         replyMarkup: nil,
-                                         parseMode: .markdown)
-        
-        /// Check if the message is not empty
-        if !messageRequest.message.text.isEmpty {
-            /// Check if it's a command.
-            if messageRequest.message.text.hasPrefix("/") {
-                /// Check if it's a `start` command.
-                if let command = Command(messageRequest.message.text), command.command == "start" {
-//                    let player = Player()
-//                    player.id = messageRequest.message.from.id
-//                    player.location = .nowhere
-                    let name = messageRequest.message.from.username ?? messageRequest.message.from.firstName
-                    response.text = """
-                    Welcome to SwiftyBot \(name)!
-                    To list all available commands type /help
-                    """
-                /// Check if it's a `help` command.
-                } else if let command = Command(messageRequest.message.text), command.command == "help" {
-                    response.text = """
-                    Help?
-                    """
-                    var keyboardMarkup = ReplyKeyboardMarkup()
-                    var row = [KeyboardButton(text: "Button 1"), KeyboardButton(text: "Button 2")]
-                    keyboardMarkup.keyboard.append(row)
-                    response.replyMarkup = keyboardMarkup
-                /// It's not a valid command.
-                } else {
-                    response.text = """
-                    Unrecognized command.
-                    To list all available commands type /help
-                    """
-                }
-            /// It's a normal message, so reverse it.
-            } else {
-                response.text = messageRequest.message.text.reversed(preserveFormat: true)
-            }
-        }
-        
+
+        let response = try Engine.process(request: request)
+
+//            /// Check if it's a `start` command.
+////            if let command = Command(messageRequest.message.text), command.command == "start" {
+////                let name = messageRequest.message.from.username ?? messageRequest.message.from.firstName
+////                response.text = """
+////                Welcome to SwiftyBot \(name)!
+////                To list all available commands type /help
+////                """
+////                /// Check if it's a `help` command.
+////            } else if let command = Command(messageRequest.message.text), command.command == "help" {
+////                response.text = """
+////                Help?
+////                """
+////                var keyboardMarkup = ReplyKeyboardMarkup()
+////                var row = [KeyboardButton(text: "Button 1"), KeyboardButton(text: "Button 2")]
+////                keyboardMarkup.keyboard.append(row)
+////                response.replyMarkup = keyboardMarkup
+////                /// It's not a valid command.
+////            } else {
+////                response.text = """
+////                Unrecognized command.
+////                To list all available commands type /help
+////                """
+////            }
+
         /// Create the JSON response.
         /// https://core.telegram.org/bots/api#sendmessage
         var httpResponse = HTTPResponse(status: .ok, headers: ["Content-Type": "application/json"])
