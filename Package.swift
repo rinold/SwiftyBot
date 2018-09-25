@@ -31,7 +31,7 @@ let package = Package(
     name: "ThyearBot",
     dependencies: [
         .package(url: "https://github.com/vapor/vapor.git", .upToNextMinor(from: "3.0.0")),
-        .package(url: "https://github.com/vapor/fluent-sqlite.git", .upToNextMinor(from: "3.0.0")),
+        .package(url: "https://github.com/vapor/fluent-postgresql.git", .upToNextMinor(from: "1.0.0")),
         .package(url: "https://github.com/FabrizioBrancati/BFKit-Swift.git", .upToNextMinor(from: "3.2.0"))
     ],
     targets: [
@@ -44,7 +44,7 @@ let package = Package(
             "Vapor",
             "BFKit",
             "Helpers",
-            "FluentSQLite"
+            "FluentPostgreSQL"
         ]),
         .target(name: "Assistant", dependencies: [
             "Vapor",

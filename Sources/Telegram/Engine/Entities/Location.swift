@@ -5,7 +5,7 @@
 //  Created by Mikhail Churbanov on 23/09/2018.
 //
 
-import FluentSQLite
+import FluentPostgreSQL
 
 public final class Location: Codable {
     /// Database id
@@ -26,5 +26,5 @@ extension Location {
     static let nowhere = Location(id: nil, name: "Nowhere", description: "")
 }
 
-extension Location: SQLiteModel { }
+extension Location: PostgreSQLModel { }
 extension Location: Migration { }

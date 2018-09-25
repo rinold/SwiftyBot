@@ -5,7 +5,7 @@
 //  Created by Mikhail Churbanov on 22/09/2018.
 //
 
-import FluentSQLite
+import FluentPostgreSQL
 
 public final class Player: Codable {
     /// Database id
@@ -40,5 +40,5 @@ public final class Player: Codable {
     }
 }
 
-extension Player: SQLiteModel { }
+extension Player: PostgreSQLModel { }
 extension Player: Migration { }
