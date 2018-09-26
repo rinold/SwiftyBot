@@ -28,4 +28,13 @@ import Bot
 import Vapor
 
 /// Run the App.
-try app(.detect()).run()
+for i in 0..<3 {
+    do {
+        try app(.detect()).run()
+    } catch {
+        if i == 2 {
+            throw error
+        }
+        Thread.sleep(forTimeInterval: 15)
+    }
+}
